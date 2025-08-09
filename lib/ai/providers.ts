@@ -3,7 +3,7 @@ import {
   extractReasoningMiddleware,
   wrapLanguageModel,
 } from 'ai';
-import { xai } from '@ai-sdk/xai';
+import { fireworks } from '@ai-sdk/fireworks'; // Fireworks import
 import {
   artifactModel,
   chatModel,
@@ -23,15 +23,16 @@ export const myProvider = isTestEnvironment
     })
   : customProvider({
       languageModels: {
-        'chat-model': xai('grok-2-vision-1212'),
+        'chat-model': fireworks('accounts/fireworks/models/qwen3-235b-a22b-instruct-2507'),
         'chat-model-reasoning': wrapLanguageModel({
-          model: xai('grok-3-mini-beta'),
+          model: fireworks('accounts/fireworks/models/qwen3-235b-a22b-instruct-2507'),
           middleware: extractReasoningMiddleware({ tagName: 'think' }),
         }),
-        'title-model': xai('grok-2-1212'),
-        'artifact-model': xai('grok-2-1212'),
+        'title-model': fireworks('accounts/fireworks/models/qwen3-235b-a22b-instruct-2507'),
+        'artifact-model': fireworks('accounts/fireworks/models/qwen3-235b-a22b-instruct-2507'),
       },
-      imageModels: {
-        'small-model': xai.imageModel('grok-2-image'),
-      },
+      // Agar Fireworks AI image model support karta hai toh yahan use karo
+      // imageModels: {
+      //   'small-model': fireworks.imageModel('your-image-model-id'),
+      // },
     });
